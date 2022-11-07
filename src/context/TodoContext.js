@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { tasksData } from "../mock/Data";
+
 
 const TodoContext = React.createContext();
 
@@ -8,7 +10,7 @@ export function useTodo() {
 
 export function TodoProvider({ children }) {
   const [loading, setLoading] = useState(true);
-  const [todos, setTodos] = useState(true);
+  const [todos, setTodos] = useState(tasksData);
   const [error, setError] = useState("");
 
   useEffect(() => {
