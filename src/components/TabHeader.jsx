@@ -5,24 +5,38 @@ const TabHeader = ({ totalTasks, title }) => {
   return (
     <>
       <div className="flex items-center flex-shrink-0 h-10 px-2">
-        <span className="block text-sm font-semibold">{title.toUpperCase()}</span>
+        <span className="block text-sm font-semibold">
+          {title.toUpperCase()}
+        </span>
         <span className="flex items-center justify-center w-5 h-5 ml-2 text-sm font-semibold text-white bg-white rounded bg-opacity-30">
           {totalTasks}
         </span>
-        {
-          title !== 'done' &&
-            <button onClick={() => setShowModal(true)} type="button" className="flex items-center justify-center w-6 h-6 ml-auto text-gray-400 rounded hover:bg-gray-700 hover:text-indigo-100" data-modal-toggle="task-add-modal">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-              </svg>
-            </button>
-        }
+        {title !== "done" && title !== "in-progress" && (
+          <button
+            onClick={() => setShowModal(true)}
+            type="button"
+            className="flex items-center justify-center w-6 h-6 ml-auto text-gray-400 rounded hover:bg-gray-700 hover:text-indigo-100"
+            data-modal-toggle="task-add-modal"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              ></path>
+            </svg>
+          </button>
+        )}
       </div>
       {showModal ? (
         <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-96 my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
@@ -40,23 +54,55 @@ const TabHeader = ({ totalTasks, title }) => {
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="space-y-6" action="#">
-                      <div>
-                          <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
-                          <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Title" required/>
-                      </div>
-                      <div>
-                          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                          <textarea name="" id="" cols="30" rows="3"  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Description"></textarea>
-                      </div>
-                      <div>
-                      <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an status</label>
-                        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option selected>Select a status</option>
-                          <option value="todo">Todo</option>
-                          <option value="in-progress">In Progress</option>
-                          <option value="done">Done</option>
-                        </select>
-                      </div>
+                    <div>
+                      <label
+                        htmlFor="title"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Title"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="password"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        Description
+                      </label>
+                      <textarea
+                        name=""
+                        id=""
+                        cols="30"
+                        rows="3"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Description"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="countries"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Select an status
+                      </label>
+                      <select
+                        id="countries"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option selected>Select a status</option>
+                        <option value="todo">Todo</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="done">Done</option>
+                      </select>
+                    </div>
                   </form>
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
