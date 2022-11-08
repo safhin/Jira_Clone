@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { useTodo } from "../context/TodoContext";
 import TabHeader from "./TabHeader";
 import Task from "./Task";
 
@@ -10,7 +9,7 @@ const TaskTab = ({
   isDraging,
   handleUpdatedTask,
 }) => {
-  const { todos, loading } = useTodo();
+
   const dragTask = useRef();
   const dragOverTask = useRef();
 
@@ -49,7 +48,8 @@ const TaskTab = ({
         onDrop={handleDragDrop}
         onDragOver={handleDragOver}
       >
-        {tasks.map(
+        {
+        tasks && tasks.map(
           (task, index) =>
             task.status === title && (
               <Task

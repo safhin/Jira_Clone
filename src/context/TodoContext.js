@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { tasksData } from "../mock/Data";
 
 
 const TodoContext = React.createContext();
@@ -10,21 +9,22 @@ export function useTodo() {
 
 export function TodoProvider({ children }) {
   const [loading, setLoading] = useState(true);
-  const [todos, setTodos] = useState(tasksData);
-  const [error, setError] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchTodo = async () => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
+      const response = await fetch(
+        "http://localhost:3366/api/v1/content/allTask"
+      );
+      console.log(response);
+      if(response.status === 200){
         const json = await response.json();
         setTodos(json);
         setLoading(false);
-      } catch (error) {
-        setError("Something wrong happend");
-        setLoading(false);
+      }else{
+        setError(true)
+        setLoading(false)
       }
     };
     fetchTodo();
@@ -32,7 +32,8 @@ export function TodoProvider({ children }) {
 
   const value = {
     todos,
-    loading,
+    error,
+    loading
   };
 
   return (
