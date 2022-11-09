@@ -17,7 +17,6 @@ export function TodoProvider({ children }) {
       const response = await fetch(
         "http://localhost:3366/api/v1/content/allTask"
       );
-      console.log(response);
       if(response.status === 200){
         const json = await response.json();
         setTodos(json);
