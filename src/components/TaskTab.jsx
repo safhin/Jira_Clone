@@ -11,11 +11,10 @@ const TaskTab = ({
   isDraging,
   handleUpdatedTask,
 }) => {
-
   const [showModal, setShowModal] = useState(false);
   const [titleInput, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const[updatedTasks, setUpdatedTasks] = useState(tasks);
+  const [updatedTasks, setUpdatedTasks] = useState(tasks);
   const dragTask = useRef();
   const dragOverTask = useRef();
 
@@ -53,7 +52,7 @@ const TaskTab = ({
       title: titleInput,
       description: description,
       status: "todo",
-    }
+    };
 
     await fetch(`${apiURL.baseURL}/content/create`, {
       method: "POST",
@@ -61,7 +60,7 @@ const TaskTab = ({
       body: JSON.stringify(data),
     })
       .then((response) => {
-        setUpdatedTasks([...tasks, data])
+        setUpdatedTasks([...tasks, data]);
         setShowModal(false);
         toast.success("Task created");
       })
@@ -71,15 +70,13 @@ const TaskTab = ({
       });
   };
 
-
-
   return (
     <div className="flex flex-col w-1/3 ">
-      <TabHeader 
-        totalTasks={5} 
-        title={title} 
-        handleSubmit={handleSubmit} 
-        showModal={showModal} 
+      <TabHeader
+        totalTasks={5}
+        title={title}
+        handleSubmit={handleSubmit}
+        showModal={showModal}
         setShowModal={setShowModal}
         titleInput={titleInput}
         setTitle={setTitle}
@@ -91,22 +88,21 @@ const TaskTab = ({
         onDrop={handleDragDrop}
         onDragOver={handleDragOver}
       >
-        {
-        updatedTasks && updatedTasks.map(
-          (task, index) =>
-            task.status === title && (
-              <Task
-                task={task}
-                key={task.id}
-                index={index}
-                status={title}
-                handleDragging={handleDragging}
-                handleDragStart={(e) => handleDragStart(e, index, task)}
-                handleDragEnd={handleDragEnd}
-                handleDragEnter={(e) => handleDragEnter(e, index)}
-              />
-            )
-        )}
+        {updatedTasks &&
+          updatedTasks.map(
+            (task, index) =>
+              task.status === title && (
+                <Task
+                  task={task}
+                  key={task.id}
+                  status={title}
+                  handleDragging={handleDragging}
+                  handleDragStart={(e) => handleDragStart(e, index, task)}
+                  handleDragEnd={handleDragEnd}
+                  handleDragEnter={(e) => handleDragEnter(e, index)}
+                />
+              )
+          )}
       </div>
     </div>
   );

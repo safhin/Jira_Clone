@@ -1,6 +1,6 @@
 import { TodoProvider } from "../context/TodoContext";
 import Layout from "./Layout";
-import Tasks from "./Tasks";
+import Tasks from "./Tasks.jsx";
 
 function App() {
   return (

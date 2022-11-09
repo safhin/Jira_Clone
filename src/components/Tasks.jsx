@@ -59,7 +59,6 @@ const Tasks = () => {
                 tasks={tasks}
                 title={status}
                 handleDragging={handleDragging}
-                isDraging={isDraging}
                 handleUpdatedTask={handleUpdatedTask}
               />
             ))}

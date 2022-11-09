@@ -2,7 +2,6 @@ import React from "react";
 
 const Task = ({
   task,
-  index,
   status,
   handleDragStart,
   handleDragEnd,
