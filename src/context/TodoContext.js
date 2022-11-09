@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import api from '../apiUrl.json';
 
 const TodoContext = React.createContext();
 
@@ -13,8 +14,12 @@ export function TodoProvider({ children }) {
 
   useEffect(() => {
     const fetchTodo = async () => {
-      await fetch("http://localhost:9000/api/v1/content/allTask")
+      await fetch(`${api.baseURL}/content/allTask`)
         .then((response) => {
+          if(!response.ok){
+            setError(true);
+            setLoading(false);
+          }
           return response.json();
         })
         .then((data) => {

@@ -1,32 +1,6 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 
-const TabHeader = ({ totalTasks, title }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [titleInput, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await fetch("http://localhost:9000/api/v1/content/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: titleInput,
-        description: description,
-        status: "todo",
-      }),
-    })
-      .then((response) => {
-        setShowModal(false);
-        toast.success("Task created");
-      })
-      .catch((error) => {
-        setShowModal(false);
-        console.log(error);
-      });
-  };
-
+const TabHeader = ({ totalTasks, title, handleSubmit, showModal, setShowModal, titleInput, setTitle, description, setDescription }) => {
   return (
     <>
       <div className="flex items-center flex-shrink-0 h-10 px-2">

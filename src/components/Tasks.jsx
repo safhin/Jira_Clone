@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import apiURL from "../apiUrl.json";
 import { useTodo } from "../context/TodoContext";
 import TaskTab from "./TaskTab";
 
@@ -20,7 +21,7 @@ const Tasks = () => {
       copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
 
       //api call for update status in backend
-      await fetch(`http://localhost:9000/api/v1/content/task/${id}/${status}`, {
+      await fetch(`${apiURL.baseURL}/content/task/${id}/${status}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
