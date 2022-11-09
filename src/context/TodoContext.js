@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 
-
 const TodoContext = React.createContext();
 
 export function useTodo() {
@@ -14,17 +13,20 @@ export function TodoProvider({ children }) {
 
   useEffect(() => {
     const fetchTodo = async () => {
-      const response = await fetch(
-        "http://localhost:3366/api/v1/content/allTask"
-      );
-      if(response.status === 200){
-        const json = await response.json();
-        setTodos(json);
-        setLoading(false);
-      }else{
-        setError(true)
-        setLoading(false)
-      }
+      await fetch("http://localhost:9000/api/v1/content/allTask")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setTodos(data);
+          setError(false);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(true);
+          setLoading(false);
+        });
     };
     fetchTodo();
   }, []);
@@ -32,7 +34,7 @@ export function TodoProvider({ children }) {
   const value = {
     todos,
     error,
-    loading
+    loading,
   };
 
   return (
