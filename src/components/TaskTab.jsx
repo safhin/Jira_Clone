@@ -7,8 +7,6 @@ import Task from "./Task";
 const TaskTab = ({
   title,
   tasks,
-  handleDragging,
-  isDraging,
   handleUpdatedTask,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -28,17 +26,14 @@ const TaskTab = ({
     const id = +e.dataTransfer.getData("text");
     e.target.classList.remove("mb-10");
     handleUpdatedTask(id, title, dragTask, dragOverTask);
-    handleDragging(false);
   };
 
   const handleDragStart = (e, position, task) => {
     e.dataTransfer.setData("text", task.id);
     dragTask.current = position;
-    handleDragging(true);
   };
 
   const handleDragEnd = (e) => {
-    handleDragging(false);
   };
 
   const handleDragEnter = (e, position) => {
@@ -73,7 +68,6 @@ const TaskTab = ({
   return (
     <div className="flex flex-col w-1/3 ">
       <TabHeader
-        totalTasks={5}
         title={title}
         handleSubmit={handleSubmit}
         showModal={showModal}
@@ -96,7 +90,6 @@ const TaskTab = ({
                   task={task}
                   key={task.id}
                   status={title}
-                  handleDragging={handleDragging}
                   handleDragStart={(e) => handleDragStart(e, index, task)}
                   handleDragEnd={handleDragEnd}
                   handleDragEnter={(e) => handleDragEnter(e, index)}

@@ -7,8 +7,6 @@ import TaskTab from "./TaskTab";
 const Tasks = () => {
   const { todos, loading, error } = useTodo();
   const taskStatus = ["todo", "in-progress", "done"];
-  const [isDraging, setIsDragging] = useState(false);
-  const handleDragging = (dragging) => setIsDragging(dragging);
   const [tasks, setTasks] = useState(todos);
 
   const handleUpdatedTask = async (id, status, dragTask, dragOverTask) => {
@@ -58,7 +56,6 @@ const Tasks = () => {
                 key={status}
                 tasks={tasks}
                 title={status}
-                handleDragging={handleDragging}
                 handleUpdatedTask={handleUpdatedTask}
               />
             ))}
