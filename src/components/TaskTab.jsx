@@ -1,14 +1,10 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import apiURL from "../apiUrl.json";
+// import apiURL from "../apiUrl.json";
 import TabHeader from "./TabHeader";
 import Task from "./Task";
 
-const TaskTab = ({
-  title,
-  tasks,
-  handleUpdatedTask,
-}) => {
+const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
   const [showModal, setShowModal] = useState(false);
   const [titleInput, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -33,8 +29,7 @@ const TaskTab = ({
     dragTask.current = position;
   };
 
-  const handleDragEnd = (e) => {
-  };
+  const handleDragEnd = (e) => {};
 
   const handleDragEnter = (e, position) => {
     dragOverTask.current = position;
@@ -49,20 +44,24 @@ const TaskTab = ({
       status: "todo",
     };
 
-    await fetch(`${apiURL.baseURL}/content/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        setUpdatedTasks([...tasks, data]);
-        setShowModal(false);
-        toast.success("Task created");
-      })
-      .catch((error) => {
-        setShowModal(false);
-        console.log(error);
-      });
+    setUpdatedTasks([...tasks, data]);
+    setShowModal(false);
+    toast.success("Task created");
+
+    // await fetch(`${apiURL.baseURL}/content/create`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => {
+    //     setUpdatedTasks([...tasks, data]);
+    //     setShowModal(false);
+    //     toast.success("Task created");
+    //   })
+    //   .catch((error) => {
+    //     setShowModal(false);
+    //     console.log(error);
+    //   });
   };
 
   return (

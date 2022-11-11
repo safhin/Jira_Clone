@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { tasksData } from "../mock/Data";
+// import api from "../apiUrl.json";
+import { tasksData } from "../mock/Data.js";
 const TodoContext = React.createContext();
 
 export function useTodo() {
@@ -11,7 +12,7 @@ export function TodoProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [error, setError] = useState(false);
 
-  //if api availabel use this function
+  // if api availabel use this function
   // useEffect(() => {
   //   const fetchTodo = async () => {
   //     await fetch(`${api.baseURL}/content/allTask`)

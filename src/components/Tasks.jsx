@@ -39,6 +39,7 @@ const Tasks = () => {
           console.log(error);
         });
     } else {
+      console.log(dragTask);
       const [dragTaskContent] = copyTasks.splice(dragTask.current, 1);
       copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
       setTasks(copyTasks);
