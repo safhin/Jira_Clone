@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import apiURL from "../apiUrl.json";
 import { useTodo } from "../context/TodoContext";
 import TaskTab from "./TaskTab";
 
@@ -9,37 +8,52 @@ const Tasks = () => {
   const taskStatus = ["todo", "in-progress", "done"];
   const [tasks, setTasks] = useState(todos);
 
+  console.log(tasks);
+
   const handleUpdatedTask = async (id, status, dragTask, dragOverTask) => {
     const copyTasks = [...tasks];
     const task = tasks.find((item) => item.id === id);
     const index = tasks.indexOf(task);
 
+    //   if (task.status !== status) {
+    //     const [dragTaskContent] = copyTasks.splice(index, 1);
+    //     copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
+
+    //     //api call for update status in backend
+    //     await fetch(`${apiURL.baseURL}/content/task/${id}/${status}`, {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({
+    //         draggedItem: task,
+    //         draggingPositionId: dragOverTask.current,
+    //       }),
+    //     })
+    //       .then((response) => {
+    //         if (response.status === 200) {
+    //           task.status = status;
+    //           setTasks(copyTasks);
+    //           toast.success(`Your task in ${status}`);
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         toast.error("Something wrong happened");
+    //         console.log(error);
+    //       });
+    //   } else {
+    //     console.log(dragTask);
+    //     const [dragTaskContent] = copyTasks.splice(dragTask.current, 1);
+    //     copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
+    //     setTasks(copyTasks);
+    //   }
+    // };
+
     if (task.status !== status) {
       const [dragTaskContent] = copyTasks.splice(index, 1);
       copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
-
-      //api call for update status in backend
-      await fetch(`${apiURL.baseURL}/content/task/${id}/${status}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          draggedItem: task,
-          draggingPositionId: dragOverTask.current,
-        }),
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            task.status = status;
-            setTasks(copyTasks);
-            toast.success(`Your task in ${status}`);
-          }
-        })
-        .catch((error) => {
-          toast.error("Something wrong happened");
-          console.log(error);
-        });
+      task.status = status;
+      setTasks(copyTasks);
+      toast.success(`Your task in ${status}`);
     } else {
-      console.log(dragTask);
       const [dragTaskContent] = copyTasks.splice(dragTask.current, 1);
       copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
       setTasks(copyTasks);
