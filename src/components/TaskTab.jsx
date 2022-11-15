@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-// import apiURL from "../apiUrl.json";
+import apiURL from "../apiUrl.json";
 import TabHeader from "./TabHeader";
 import Task from "./Task";
 
@@ -17,22 +17,24 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
     e.preventDefault();
   };
 
-  const handleDragDrop = (e) => {
-    e.preventDefault();
-    const id = +e.dataTransfer.getData("text");
-    e.target.classList.remove("mb-10");
-    handleUpdatedTask(id, title, dragTask, dragOverTask);
-  };
-
   const handleDragStart = (e, position, task) => {
-    e.dataTransfer.setData("text", task.id);
     dragTask.current = position;
+    e.dataTransfer.setData("text", task.id);
   };
 
   const handleDragEnd = (e) => {};
 
   const handleDragEnter = (e, position) => {
     dragOverTask.current = position;
+  };
+
+  const handleDragDrop = (e) => {
+    e.preventDefault();
+    const id = +e.dataTransfer.getData("text");
+    e.target.classList.remove("mb-10");
+    const task = tasks.find((item) => item.id === id);
+    console.log(task);
+    handleUpdatedTask(id, title, dragTask, dragOverTask);
   };
 
   const handleSubmit = async (e) => {
@@ -44,24 +46,39 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
       status: "todo",
     };
 
-    setUpdatedTasks([...tasks, data]);
-    setShowModal(false);
-    toast.success("Task created");
+    await fetch(`${apiURL.baseURL}/content/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        setUpdatedTasks([...tasks, data]);
+        setShowModal(false);
+        toast.success("Task created");
+      })
+      .catch((error) => {
+        setShowModal(false);
+        console.log(error);
+      });
+  };
 
-    // await fetch(`${apiURL.baseURL}/content/create`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => {
-    //     setUpdatedTasks([...tasks, data]);
-    //     setShowModal(false);
-    //     toast.success("Task created");
-    //   })
-    //   .catch((error) => {
-    //     setShowModal(false);
-    //     console.log(error);
-    //   });
+  const handleDelete = async (e, id) => {
+    const task = tasks.find((task) => task.id === id);
+    const index = tasks.indexOf(task);
+
+    await fetch(`${apiURL.baseURL}/content/task/${id}`, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          tasks.splice(index, 1);
+          setUpdatedTasks([...tasks]);
+          toast.success("Task deleted");
+        } else {
+          toast.error("Something went wrong");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -92,6 +109,7 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
                   handleDragStart={(e) => handleDragStart(e, index, task)}
                   handleDragEnd={handleDragEnd}
                   handleDragEnter={(e) => handleDragEnter(e, index)}
+                  handleDelete={(e) => handleDelete(e, task.id)}
                 />
               )
           )}

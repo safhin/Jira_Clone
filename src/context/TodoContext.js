@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-// import api from "../apiUrl.json";
-import { tasksData } from "../mock/Data.js";
+import api from "../apiUrl.json";
+
 const TodoContext = React.createContext();
 
 export function useTodo() {
@@ -12,36 +12,28 @@ export function TodoProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [error, setError] = useState(false);
 
-  // if api availabel use this function
-  // useEffect(() => {
-  //   const fetchTodo = async () => {
-  //     await fetch(`${api.baseURL}/content/allTask`)
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           setError(true);
-  //           setLoading(false);
-  //         }
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         setTodos(data);
-  //         setError(false);
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         setError(true);
-  //         setLoading(false);
-  //       });
-  //   };
-  //   fetchTodo();
-  // }, []);
-
-  //this is mock data
   useEffect(() => {
-    setTodos(tasksData);
-    setLoading(false);
-    setError(false);
+    const fetchTodo = async () => {
+      await fetch(`${api.baseURL}/content/allTask`)
+        .then((response) => {
+          if (!response.ok) {
+            setError(true);
+            setLoading(false);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setTodos(data);
+          setError(false);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(true);
+          setLoading(false);
+        });
+    };
+    fetchTodo();
   }, []);
 
   const value = {
