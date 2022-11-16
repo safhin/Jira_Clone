@@ -22,8 +22,6 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
     e.dataTransfer.setData("text", task.id);
   };
 
-  const handleDragEnd = (e) => {};
-
   const handleDragEnter = (e, position) => {
     dragOverTask.current = position;
   };
@@ -107,7 +105,6 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
                   key={task.id}
                   status={title}
                   handleDragStart={(e) => handleDragStart(e, index, task)}
-                  handleDragEnd={handleDragEnd}
                   handleDragEnter={(e) => handleDragEnter(e, index)}
                   handleDelete={(e) => handleDelete(e, task.id)}
                 />
