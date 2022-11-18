@@ -17,7 +17,7 @@ const Task = ({
     <>
       <div
         className="relative flex flex-col items-start p-4 mt-3 bg-gray-700 rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 ease-in-out duration-300 kanban_item"
-        draggable
+        draggable="true"
         onDragStart={handleDragStart}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}

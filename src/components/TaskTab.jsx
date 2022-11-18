@@ -18,8 +18,8 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
   };
 
   const handleDragStart = (e, position, task) => {
-    dragTask.current = position;
     e.dataTransfer.setData("text", task.id);
+    dragTask.current = position;
   };
 
   const handleDragEnter = (e, position) => {
@@ -29,9 +29,8 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
   const handleDragDrop = (e) => {
     e.preventDefault();
     const id = +e.dataTransfer.getData("text");
+    console.log(id);
     e.target.classList.remove("mb-10");
-    const task = tasks.find((item) => item.id === id);
-    console.log(task);
     handleUpdatedTask(id, title, dragTask, dragOverTask);
   };
 
