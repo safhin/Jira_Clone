@@ -12,14 +12,12 @@ const Tasks = () => {
   const handleUpdatedTask = async (id, status, dragTask, dragOverTask) => {
     const copyTasks = [...tasks];
     const task = copyTasks.find((item) => {
-      console.log(tasks);
       return item?.id === id;
     });
     const index = tasks.indexOf(task);
 
     if (task && task.status !== status) {
       const dragTaskContent = copyTasks.splice(index, 1);
-      console.log(dragTaskContent[0].id);
       copyTasks.splice(dragOverTask.current, 0, dragTaskContent[0]);
       // api call for update status in backend
       await fetch(`${apiURL.baseURL}/content/task/${id}/${status}`, {
@@ -33,7 +31,7 @@ const Tasks = () => {
         .then((response) => {
           if (response.status === 200) {
             task.status = status;
-            setTasks(copyTasks);
+            setTasks([...copyTasks]);
             toast.success(`Your task in ${status}`);
           }
         })
@@ -42,9 +40,9 @@ const Tasks = () => {
           console.log(error);
         });
     } else {
-      const [dragTaskContent] = copyTasks.splice(dragTask.current, 1);
-      copyTasks.splice(dragOverTask.current, 0, dragTaskContent);
-      setTasks(copyTasks);
+      const dragTaskContent = copyTasks.splice(dragTask.current, 1);
+      copyTasks.splice(dragOverTask.current, 0, dragTaskContent[0]);
+      setTasks([...copyTasks]);
     }
   };
 
@@ -54,9 +52,9 @@ const Tasks = () => {
       <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
         {!loading && !error && (
           <>
-            {taskStatus.map((status) => (
+            {taskStatus.map((status, i) => (
               <TaskTab
-                key={status}
+                key={i}
                 tasks={tasks}
                 title={status}
                 handleUpdatedTask={handleUpdatedTask}

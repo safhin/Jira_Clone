@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import apiURL from "../apiUrl.json";
 import TabHeader from "./TabHeader";
@@ -8,9 +8,13 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
   const [showModal, setShowModal] = useState(false);
   const [titleInput, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [updatedTasks, setUpdatedTasks] = useState(tasks);
+  const [updatedTasks, setUpdatedTasks] = useState([]);
   const dragTask = useRef();
   const dragOverTask = useRef();
+
+  useEffect(() => {
+    setUpdatedTasks(tasks);
+  }, [tasks]);
 
   const handleDragOver = (e) => {
     e.target.classList.add("mb-10");
@@ -29,7 +33,6 @@ const TaskTab = ({ title, tasks, handleUpdatedTask }) => {
   const handleDragDrop = (e) => {
     e.preventDefault();
     const id = +e.dataTransfer.getData("text");
-    console.log(id);
     e.target.classList.remove("mb-10");
     handleUpdatedTask(id, title, dragTask, dragOverTask);
   };
